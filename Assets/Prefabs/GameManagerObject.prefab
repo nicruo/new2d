@@ -43,5 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b53245e5994aa4691abadd2a4dcb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1997798260555359490, guid: 40676e51655e63f41b59c6bcf3219cb8,
+    type: 3}
+  levels: []
   lootCounter: 0
   lootToWin: 3
+  nextScene: 
+  heart1: {fileID: 0}
+  heart2: {fileID: 0}
+  heart3: {fileID: 0}

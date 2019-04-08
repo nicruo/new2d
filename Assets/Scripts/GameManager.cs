@@ -8,6 +8,7 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public GameObject playerPrefab;
 
     public List<Level> levels;
     Level currentLevel;
@@ -45,7 +46,15 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         LoadLevel(SceneManager.GetActiveScene().name);
+
+        SceneManager.activeSceneChanged += ActiveSceneChanged;
     }
+
+    void ActiveSceneChanged(Scene arg0, Scene scene)
+    {
+        StartCoroutine(ShowPlayer(2));
+    }
+
 
     void LoadLevel(string sceneName)
     {
@@ -53,6 +62,21 @@ public class GameManager : MonoBehaviour
         lootCounter = currentLevel.lootCounter;
         lootToWin = currentLevel.lootToWin;
         levelStarted = true;
+
+    }
+
+
+    IEnumerator ShowPlayer(int seconds)
+    {
+
+
+        yield return new WaitForSeconds(seconds);
+        Debug.Log(Time.deltaTime);
+
+        Instantiate(playerPrefab, currentLevel.spawnPoint, Quaternion.identity);
+
+
+        yield return null;
     }
 
 
@@ -119,6 +143,11 @@ public class GameManager : MonoBehaviour
             heart2.enabled = false;
             heart3.enabled = false;
         }
+
+    }
+
+    void FixedUpdate()
+    {
 
     }
 }
