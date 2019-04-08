@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
-    public int lootCounter = 0;
-    public int lootToWin = 3;
+    public static GameManager instance = null;
+
+    public List<Level> levels;
+    Level currentLevel;
+
+    private bool levelStarted = false;
+
+    public int lootCounter;
+    public int lootToWin;
     public string nextScene;
 
     public Image heart1;
@@ -17,20 +25,74 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //SceneManager.LoadScene("Pause", LoadSceneMode.Additive);
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if(instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
         
+        InitGame();
+    }
+
+    void InitGame()
+    {
+        LoadLevel(SceneManager.GetActiveScene().name);
+    }
+
+    void LoadLevel(string sceneName)
+    {
+        currentLevel = levels.First(l => l.scene.Equals(sceneName));
+        lootCounter = currentLevel.lootCounter;
+        lootToWin = currentLevel.lootToWin;
+        levelStarted = true;
+    }
+
+
+    void LoadAndInitNextLevel()
+    {
+        var nextIndex = levels.IndexOf(currentLevel) + 1;
+
+        if (nextIndex >= levels.Count)
+        {
+            SceneManager.LoadScene("Menu");
+            Destroy(gameObject);
+        }
+        else
+        {
+            SceneManager.LoadScene(levels[nextIndex].scene);
+            LoadLevel(levels[nextIndex].scene);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("Menu");
         }
 
-        if(lootCounter >= lootToWin)
+        if (levelStarted)
         {
-            SceneManager.LoadScene(nextScene);
+            if (lootCounter >= lootToWin)
+            {
+                levelStarted = false;
+                LoadAndInitNextLevel();
+            }
+        }
+
+        if(heart1 == null || heart2 == null || heart3 == null)
+        {
+            return;
         }
 
         if(PlayerControl.life > 2)

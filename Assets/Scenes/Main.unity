@@ -1899,8 +1899,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
         type: 3}
+      propertyPath: levels.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
+        type: 3}
       propertyPath: nextScene
-      value: Second
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
         type: 3}
@@ -1917,6 +1922,31 @@ PrefabInstance:
       propertyPath: heart3
       value: 
       objectReference: {fileID: 8139256847379277187}
+    - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
+        type: 3}
+      propertyPath: levels.Array.data[0].lootToWin
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
+        type: 3}
+      propertyPath: levels.Array.data[0].scene
+      value: Main
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
+        type: 3}
+      propertyPath: levels.Array.data[1].scene
+      value: Second
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
+        type: 3}
+      propertyPath: levels.Array.data[1].lootToWin
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132703251180323466, guid: fec62633afa5b914d82bc642135fb9c5,
+        type: 3}
+      propertyPath: lootToWin
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fec62633afa5b914d82bc642135fb9c5, type: 3}
 --- !u!1001 &2769832184734467935
