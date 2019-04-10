@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1102630316}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &142929489
@@ -645,6 +645,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startScene: Main
+  GameManagerObject: {fileID: 4141338352656478420, guid: fec62633afa5b914d82bc642135fb9c5,
+    type: 3}
 --- !u!4 &869197524
 Transform:
   m_ObjectHideFlags: 0

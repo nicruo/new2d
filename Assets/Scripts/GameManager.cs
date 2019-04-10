@@ -22,8 +22,7 @@ public class GameManager : MonoBehaviour
     public Image heart1;
     public Image heart2;
     public Image heart3;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         //SceneManager.LoadScene("Pause", LoadSceneMode.Additive);
@@ -52,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     void ActiveSceneChanged(Scene arg0, Scene scene)
     {
-        StartCoroutine(ShowPlayer(2));
+        StartCoroutine(ShowPlayer(3));
     }
 
 
@@ -62,21 +61,25 @@ public class GameManager : MonoBehaviour
         lootCounter = currentLevel.lootCounter;
         lootToWin = currentLevel.lootToWin;
         levelStarted = true;
-
     }
 
 
     IEnumerator ShowPlayer(int seconds)
     {
+        GameObject player = Instantiate(playerPrefab, currentLevel.spawnPoint, Quaternion.identity);
 
+        var sprite = player.GetComponent<SpriteRenderer>();
+        var color = sprite.color;
 
-        yield return new WaitForSeconds(seconds);
-        Debug.Log(Time.deltaTime);
+        color.a = 0;
+        sprite.color = color;
 
-        Instantiate(playerPrefab, currentLevel.spawnPoint, Quaternion.identity);
-
-
-        yield return null;
+        for (float f = 0; f <= 1; f += 0.05f)
+        {
+            color.a = f;
+            sprite.color = color;
+            yield return new WaitForSeconds(seconds / 20);
+        }
     }
 
 
@@ -86,8 +89,7 @@ public class GameManager : MonoBehaviour
 
         if (nextIndex >= levels.Count)
         {
-            SceneManager.LoadScene("Menu");
-            Destroy(gameObject);
+            EndGame();
         }
         else
         {
@@ -102,7 +104,7 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Menu");
+            EndGame();
         }
 
         if (levelStarted)
@@ -146,8 +148,10 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    void EndGame()
     {
-
+        SceneManager.activeSceneChanged -= ActiveSceneChanged;
+        Destroy(gameObject);
+        SceneManager.LoadScene("Menu");
     }
 }

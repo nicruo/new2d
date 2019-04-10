@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LootboxScript : MonoBehaviour
 {
@@ -8,17 +6,10 @@ public class LootboxScript : MonoBehaviour
     GameObject gameManagerObject;
     GameManager gameManager;
 
-    // Start is called before the first frame update
     void Start()
     {
-        gameManagerObject = GameObject.Find("GameManagerObject");
+        gameManagerObject = GameObject.Find("GameManager");
         gameManager = gameManagerObject.GetComponent<GameManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void OnDestroy()
