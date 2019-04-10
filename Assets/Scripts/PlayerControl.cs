@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 public class PlayerControl : MonoBehaviour
 {
     Rigidbody2D body;
+    Animator animator;
     float horizontal;
-    bool isJumping = false;
+    bool isJumping = true;
+    bool jumpPressed;
     public float speed = 1;
     public float jumpSpeed = 10;
     public static int life = 3;
@@ -16,13 +18,18 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
-        isJumping = Input.GetKey(KeyCode.Space);
+        jumpPressed = Input.GetKey(KeyCode.Space);
+
+
+        animator.SetBool("walking", horizontal != 0);
+        animator.SetBool("jumping", isJumping);
 
         if(life <= 0)
         {
@@ -40,17 +47,17 @@ public class PlayerControl : MonoBehaviour
     void FixedUpdate()
     {
         body.AddForce(new Vector2(horizontal * speed, 0));
-        if (isJumping)
+        if (jumpPressed && isJumping == false)
         {
-            body.AddForce(Vector2.up * jumpSpeed);
+            body.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collision.gameObject.tag == "Loot")
+        if (collider.gameObject.tag != "Loot")
         {
-            Destroy(collision.gameObject);
+            isJumping = true;
         }
     }
 
@@ -59,6 +66,10 @@ public class PlayerControl : MonoBehaviour
         if (collider.gameObject.tag == "Loot")
         {
             Destroy(collider.gameObject);
+        }
+        else
+        {
+            isJumping = false;
         }
     }
 }
